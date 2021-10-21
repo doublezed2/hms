@@ -14,7 +14,7 @@
                 var ArrDocFee = docFee.split("|");
                 $("#p_fee").val(Math.trunc(ArrDocFee[2]));
                 //Old new Patient
-                if(ArrDocFee[0]==7){
+                if(ArrDocFee[0]==1){
                     $("#new-old-pat").show();
                 }
                 else{

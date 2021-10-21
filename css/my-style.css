@@ -1,0 +1,19 @@
+.ali-sidebar-nav{
+  background-color: #07375d;
+}
+.ali-sidebar-nav li a:hover{
+  color: #e2e2e2 !important;
+}
+rx_token_number{
+  border: 2px solid #000;
+  padding: 6px 16px;
+  border-radius: 50%;
+  font-size: 32px;
+  display: block;
+  width: 20px;
+  margin-left: 68px;
+  margin-bottom: 13px;
+}
+.new-old-pat{
+  display: none;
+}

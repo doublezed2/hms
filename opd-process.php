@@ -90,7 +90,7 @@ if ($conn->query($sql) === TRUE) {
         <td style="font-size: 13pt;font-family: arial;"><?php echo $p_doctor_name; ?></td>
       </tr>
       <tr>
-        <td>Clinic: <?php echo "1st Floor"; ?></td>
+        <td>Clinic: <?php if($p_doctor_name == "Dr Ayesha Ahmer"){echo "First Floor";} else{ echo "Ground Floor";}?></td>
       </tr>
       <tr>
         <td>Company: <?php echo "Private"; ?></td>

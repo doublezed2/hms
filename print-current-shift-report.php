@@ -52,7 +52,7 @@ else{
         font-size: 16px;
     }
     @media print {
-      .receipt {
+      .report {
           display: block;
       }
       .print-message{

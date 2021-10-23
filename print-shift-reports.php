@@ -62,7 +62,7 @@ include("header.php");
                             </form>
                             <br>
                             <br>
-                            <form action="print-day-report.php" method="POST">
+                            <form action="print-today-report.php" method="POST">
                                 <button type="submit" class="btn btn-primary btn-lg">Print Day Report</button>
                             </form>
                             <?php

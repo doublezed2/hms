@@ -60,6 +60,11 @@ include("header.php");
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Print Doctor Report</button>
                             </form>
+                            <br>
+                            <br>
+                            <form action="print-day-report.php" method="POST">
+                                <button type="submit" class="btn btn-primary btn-lg">Print Day Report</button>
+                            </form>
                             <?php
                             if(isset($_GET['success'])):?>
                             <br>

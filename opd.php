@@ -6,6 +6,9 @@ if(!isset($_SESSION["user_type"])){
 if(!isset($_SESSION["shift_id"])){
     header("Location:start-shift.php");
 }
+if(isset($_SESSION["shift_report_printed"])){
+    header("Location:print-shift-reports.php");
+}
 include("db.php");
 include("header.php");
 ?>
@@ -18,24 +21,7 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <!-- <div class="container-fluid p-2" style="background-color:#333;">
-                <div class="row">
-                    <div class="col-md-12">
-                    <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">View All Appointments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Link</a>
-                    </li>
-                    </ul>
-                    </div>
-                </div>
-            </div> -->
-
+            
             <!-- Main Content -->
             <div id="content" class="mt-4">
 
@@ -116,8 +102,9 @@ include("header.php");
                                                 $d_id = $row['doc_id'];
                                                 $d_name = $row['doc_name'];
                                                 $d_fee = $row['doc_fee'];
+                                                $d_clinic = $row['clinic'];
                                             ?>
-                                            <option value="<?php echo $d_id."|".$d_name."|".$d_fee; ?>"><?php echo $d_name; ?></option>
+                                            <option value="<?php echo $d_id."|".$d_name."|".$d_fee."|".$d_clinic; ?>"><?php echo $d_name; ?></option>
                                             <?php
                                             endwhile;
                                         }

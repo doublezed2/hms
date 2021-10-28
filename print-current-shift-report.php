@@ -5,10 +5,16 @@ header("Location:index.php");
 }
 include("db.php");
 
-$s_sql = "SELECT shift_id, shift_user_name, end_time FROM shifts ORDER BY shift_id DESC LIMIT 1";
-$s_result = $conn->query($s_sql);
-$s_row = $s_result->fetch_assoc();
-$s_shift_id = $s_row['shift_id'];
+$s_shift_id = $_SESSION['shift_id'];
+
+$sh_sql = "UPDATE shifts SET end_time=NOW() WHERE shift_id=".$s_shift_id;
+if ($conn->query($sh_sql) === TRUE) {
+  $_SESSION["shift_report_printed"] = 1;
+}
+else {
+  //echo $conn->error;
+  header("Location:print-shift-reports.php?failure=1");
+}
 
 $sql = "SELECT COUNT(appointments.pat_id) AS total_pats, SUM(appointments.pat_fee) AS total_amount,shifts.shift_id, shifts.start_time, shifts.end_time, shifts.shift_user_name FROM appointments 
 INNER JOIN shifts ON appointments.pat_shift=shifts.shift_id 
@@ -68,13 +74,13 @@ else{
       <h3 style="margin-bottom:0px;">Shift Report</h3>
       <table style="width: 100%;">
       <tr>
-        <td>Shift # <?php echo $row['shift_id']; ?></td>
+        <td>Shift: <?php echo $_SESSION['shift_type']; ?></td>
       </tr>
       <tr>
-        <td>Name: <?php echo $row['shift_user_name']; ?></td>
+        <td>Name: <?php echo $_SESSION['shift_user_name']; ?></td>
       </tr>
       <tr>
-        <td>Start: <?php echo date("h:i A", strtotime($row['start_time'])) ; ?></td>
+        <td> <?php $row['start_time']; ?>Start: <?php echo date("h:i A", strtotime($row['start_time'])) ; ?></td>
       </tr>
       <tr>
         <td>End: <?php echo date("h:i A", strtotime($row['end_time'])) ; ?></td>
@@ -97,8 +103,6 @@ else{
     </script>
   </body>
   </html>
-
-    <?php
-
-$conn->close();
-?>
+  <?php
+  $conn->close();
+  ?>

@@ -7,7 +7,7 @@ include("header.php");
 ?>
 <body id="page-top">
     <div id="wrapper">
-
+        <?php include("sidebar.php"); ?>
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content" class="mt-4">
@@ -21,9 +21,11 @@ include("header.php");
                             ?>
                             <form action="close-shift-process.php" method="POST">
                                 <div class="form-group">
-                                    <label>Shift Number</label>
-                                    <input type="text" name="shift_id" class="form-control" value="<?php echo $_SESSION['shift_id']; ?>" required readonly>
-                                    <label>Name</label>
+                                    <input type="hidden" name="shift_id" value="<?php echo $_SESSION['shift_id']; ?>">
+                                    <label>Shift</label>
+                                    <input type="text" name="shift_type" class="form-control" value="<?php echo $_SESSION['shift_type']; ?>" required readonly>
+                                    <br>
+                                    <label>Username</label>
                                     <input type="text" name="shift_user_name" class="form-control" value="<?php echo $_SESSION['shift_user_name']; ?>" required readonly>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Close</button>
@@ -34,7 +36,6 @@ include("header.php");
                         </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->

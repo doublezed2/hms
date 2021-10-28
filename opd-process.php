@@ -8,6 +8,7 @@ $p_phone = trim($_POST["p_phone"]);
 $p_doctor_arr = explode("|",$_POST["p_doctor"]);
 $p_doctor = $p_doctor_arr[0];
 $p_doctor_name = $p_doctor_arr[1];
+$p_doctor_clinic = $p_doctor_arr[3];
 $p_date = $_POST["p_date"];
 $p_fee = $_POST["p_fee"];
 $pat_shift = $_SESSION["shift_id"];
@@ -17,6 +18,7 @@ $sql = "INSERT INTO appointments(pat_token, pat_name,pat_phone, pat_doctor, pat_
 SELECT IFNULL(MAX(pat_token) + 1, 1), '$p_name', '$p_phone', '$p_doctor', '$p_date', $p_fee, CURRENT_TIMESTAMP, $pat_shift
 FROM appointments WHERE pat_doctor=$p_doctor AND pat_apt_time = '$p_date'";
 if ($conn->query($sql) === TRUE) {
+  $serial_no = $conn->insert_id;
   $inner_sql = "SELECT pat_token FROM appointments WHERE pat_id=".$conn->insert_id;
   $inner_result = $conn->query($inner_sql);
   $inner_row = $inner_result->fetch_assoc();
@@ -90,7 +92,7 @@ if ($conn->query($sql) === TRUE) {
         <td style="font-size: 13pt;font-family: arial;"><?php echo $p_doctor_name; ?></td>
       </tr>
       <tr>
-        <td>Clinic: <?php if($p_doctor_name == "Dr Ayesha Ahmer"){echo "First Floor";} else{ echo "Ground Floor";}?></td>
+        <td>Clinic: <?php echo $p_doctor_clinic;?></td>
       </tr>
       <tr>
         <td>Company: <?php echo "Private"; ?></td>
@@ -99,12 +101,14 @@ if ($conn->query($sql) === TRUE) {
         <td>Fee paid: <?php echo $p_fee; ?></td>
       </tr>      
       </table>
-      <hr>    
+      <hr>
+      <p style="font-size: 10pt;"><span style="float: left;">User: <?php echo $_SESSION['shift_user_name']; ?></span><span style="float: right;">Serial: AH-<?php echo $serial_no; ?></span></p>
+      <p style="font-size: 10pt;"><span style="float: left;">Date/Time: <?php echo Date("h:i A d/m/Y"); ?></span></p>
     </div>
     <script>
       window.print();
       setTimeout(() => {
-        document.location.href = "opd.php?success=1";
+       document.location.href = "opd.php?success=1";
       }, 1000);
     </script>
   </body>

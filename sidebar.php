@@ -8,12 +8,18 @@
             <hr class="sidebar-divider my-0">
             <p class="text-white p-3 m-0">User: <?php echo $_SESSION['shift_user_name'];?>
             <br>
-            Shift: <?php echo $_SESSION['shift_id'];?></p>
+            Shift: <?php echo $_SESSION['shift_type'];?></p>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
                 <a class="nav-link" href="opd.php">
                 <i class="fas fa-calendar-plus"></i>
                     <span>OPD</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="lab-xray.php">
+                <i class="fas fa-flask"></i>
+                    <span>Laboratory</span>
                 </a>
             </li>
             <li class="nav-item active">
@@ -43,25 +49,13 @@
             endif;
             ?>
             <?php 
-            //if(isset($_SESSION["shift_id"])):?>
+            if(isset($_SESSION["shift_id"])):?>
             <li class="nav-item active">
                 <a class="nav-link" href="close-shift.php">
                 <i class="fas fa-directions"></i>
                     <span>Close Shift</span></a>
             </li>
             <?php    
-            //endif;
-            ?>
-            <?php 
-            //if(!isset($_SESSION["shift_id"])):?>
-            <li class="nav-item active">
-                <a class="nav-link" href="logout.php">
-                <i class="fas fa-external-link-alt"></i>
-                    <span>Logout</span></a>
-            </li>
-            <?php    
-            //endif;
-            ?>
-            
-            
+            endif;
+            ?>            
         </ul>

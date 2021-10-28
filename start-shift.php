@@ -17,7 +17,7 @@ include("db.php");
 
                     <div class="row mt-4">
                         <?php
-                        $sql = "SELECT shift_id, shift_user_name, end_time FROM shifts ORDER BY shift_id DESC LIMIT 1";
+                        $sql = "SELECT shift_id, shift_user_name, end_time, shift_type FROM shifts ORDER BY shift_id DESC LIMIT 1";
                         $result = $conn->query($sql);
                         $row = $result->fetch_assoc();
                         if($row['end_time'] == "0000-00-00 00:00:00"):
@@ -26,8 +26,9 @@ include("db.php");
                             <h3>Resume Shift</h3>
                             <form action="resume-shift-process.php" method="POST">
                                 <div class="form-group">
-                                    <label>Shift No.</label>
-                                    <input type="text" name="shift_id" value="<?php echo $row['shift_id']; ?>" class="form-control" readonly>
+                                    <input type="hidden" name="shift_id" value="<?php echo $row['shift_id']; ?>">
+                                    <label>Shift</label>
+                                    <input type="text" name="shift_type" value="<?php echo $row['shift_type']; ?>" class="form-control" readonly>
                                     <label>Name</label>
                                     <input type="text" name="shift_user_name" value="<?php echo $row['shift_user_name']; ?>" class="form-control" readonly>
                                 </div>
@@ -42,7 +43,17 @@ include("db.php");
                             <form action="start-shift-process.php" method="POST">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" name="shift_user_name" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="shift_user_name" class="form-control" value="<?php echo $_SESSION['user_name'];?>" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shift_type" id="morning" value="Morning" checked>
+                                        <label class="form-check-label" for="morning">Morning</label>
+                                    </div>
+                                    <div class="form-group form-check-inline">
+                                        <input class="form-check-input" type="radio" name="shift_type" id="evening" value="Evening">
+                                        <label class="form-check-label" for="evening">Evening</label>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Start</button>
                             </form>

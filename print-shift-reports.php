@@ -3,9 +3,6 @@ session_start();
 if(!isset($_SESSION["user_type"])){
 header("Location:index.php");
 }
-if(isset($_SESSION["shift_id"])){
-    header("Location:close-shift.php");
-}
 include("db.php");
 include("header.php");
 ?>
@@ -13,7 +10,7 @@ include("header.php");
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+        <?php include("sidebar.php"); ?>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
@@ -71,7 +68,6 @@ include("header.php");
                             <div class="alert alert-success">
                             <strong>Report Printed.</strong>
                             </div>
-                            <a class="btn btn-danger btn-lg" href="logout.php">Logout</a>
                             <?php 
                             endif;
                             ?>

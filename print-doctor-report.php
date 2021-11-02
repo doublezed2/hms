@@ -13,14 +13,25 @@ $date_from = date("Y-m-d 00:00:00");
 $date_to = date("Y-m-d 23:59:59");
 
 $sql = "SELECT COUNT(pat_id) AS total_pats, SUM(pat_fee) AS total_amount FROM appointments 
-WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' AND '$date_to'";
+WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' AND '$date_to' AND pat_status = 1";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
+    $_SESSION["shift_report_printed"] = 1;
 }
 else{
-  //echo $conn->error;  
   header("Location:print-shift-reports.php?failure=1");
+}
+$cancelled_patients = 0;
+$cancelled_amount = 0; // Not used yet
+$cancel_sql = "SELECT COUNT(pat_id) AS total_pats, COUNT(pat_id)*50 AS total_amount FROM appointments 
+WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' AND '$date_to' AND pat_status != 1";
+$cancel_result = $conn->query($cancel_sql);
+if ($cancel_result->num_rows > 0) {
+    $cancel_row = $cancel_result->fetch_assoc();
+    $_SESSION["shift_report_printed"] = 1;
+    $cancelled_patients = $cancel_row['total_pats'];
+    $cancelled_amount = $cancel_row['total_amount'];
 }
 ?>
 <!DOCTYPE html>
@@ -76,16 +87,16 @@ else{
         <td>Doctor: <?php echo $doctor_name; ?></td>
       </tr>
       <tr>
-        <td>Total patients: <?php echo $row['total_pats']; ?></td>
+        <td>Billed patients: <?php echo $row['total_pats']; ?></td>
       </tr>
       <tr>
-        <td>Total amount: <?php echo $row['total_amount']*1; ?></td>
-      </tr>
-      <tr>
-        <td>Hospital fees: <?php echo $row['total_pats']*50; ?></td>
+        <td>Cancelled patients: <?php echo $cancelled_patients; ?></td>
       </tr>
       <tr>
         <td>Doctor fees: <?php echo $row['total_amount']-($row['total_pats']*50); ?></td>
+      </tr>
+      <tr>
+        <td>Hospital fees: <?php echo $row['total_pats']*50; ?></td>
       </tr>
       </table>
       <hr>

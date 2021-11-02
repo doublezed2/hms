@@ -1,2 +1,4 @@
 ALTER TABLE `shifts` ADD `shift_type` VARCHAR(32) NOT NULL AFTER `shift_user_name`;
 ALTER TABLE `doctors` ADD `clinic` VARCHAR(15) NOT NULL AFTER `doc_fee`;
+ALTER TABLE `appointments` ADD `pat_status` TINYINT NOT NULL DEFAULT '1' AFTER `pat_shift`;
+ALTER TABLE `appointments` ADD `pat_updated_on` DATETIME NOT NULL AFTER `pat_status`;

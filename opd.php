@@ -21,6 +21,20 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+            <div class="container-fluid p-2" style="background-color:#333;">
+                <div class="row">
+                    <div class="col-md-12">
+                    <ul class="nav"> <!-- class for justify-content-center -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="opd.php">OPD</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="cancel-apt.php">Cancel/Free</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
             
             <!-- Main Content -->
             <div id="content" class="mt-4">
@@ -45,10 +59,15 @@ include("header.php");
                                                 Total Appointments</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <?php
-                                                $count_sql = "SELECT COUNT(pat_id) AS total_pats, SUM(pat_fee) AS total_amount FROM appointments WHERE pat_shift=".$_SESSION['shift_id'];
+                                                $shift_id = $_SESSION['shift_id'];
+                                                $count_sql = "SELECT COUNT(pat_id) AS total_pats, SUM(pat_fee) AS total_amount FROM appointments WHERE pat_shift=$shift_id AND pat_status=1";
                                                 $count_result = $conn->query($count_sql);
                                                 $count_row = $count_result->fetch_assoc();
                                                 echo $count_row['total_pats'];
+
+                                                $cancel_sql = "SELECT COUNT(pat_id) AS total_pats, COUNT(pat_id)*50 AS total_amount FROM appointments WHERE pat_shift=$shift_id AND pat_status!=1";
+                                                $cancel_result = $conn->query($cancel_sql);
+                                                $cancel_row = $cancel_result->fetch_assoc();
                                             ?>    
                                             </div>
                                         </div>
@@ -68,7 +87,7 @@ include("header.php");
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Cash</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo round($count_row['total_amount']); ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo round($count_row['total_amount']); echo" + "; echo round($cancel_row['total_amount']); echo" = "; echo round($count_row['total_amount']+$cancel_row['total_amount']); ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -183,7 +202,7 @@ include("header.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT appointments.pat_token AS p_token, appointments.pat_name AS p_name , appointments.pat_phone AS p_phone, doctors.doc_name AS p_doc FROM appointments INNER JOIN doctors ON appointments.pat_doctor=doctors.doc_id ORDER BY appointments.pat_created_on DESC limit 10";
+                                        $sql = "SELECT appointments.pat_token AS p_token, appointments.pat_name AS p_name , appointments.pat_phone AS p_phone, doctors.doc_name AS p_doc FROM appointments INNER JOIN doctors ON appointments.pat_doctor=doctors.doc_id WHERE appointments.pat_shift='$shift_id' AND pat_status=1 ORDER BY appointments.pat_created_on DESC limit 10";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()):

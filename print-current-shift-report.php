@@ -18,13 +18,18 @@ else {
 
 $sql = "SELECT COUNT(appointments.pat_id) AS total_pats, SUM(appointments.pat_fee) AS total_amount,shifts.shift_id, shifts.start_time, shifts.end_time, shifts.shift_user_name FROM appointments 
 INNER JOIN shifts ON appointments.pat_shift=shifts.shift_id 
-WHERE appointments.pat_shift=".$s_shift_id;
+WHERE appointments.pat_shift=$s_shift_id AND appointments.pat_status=1";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
 }
 else{
     header("Location:print-shift-reports.php?failure=1");
+}
+$cancel_sql = "SELECT COUNT(pat_id) AS total_pats, COUNT(pat_id)*50 AS total_amount FROM appointments WHERE pat_shift=$s_shift_id AND pat_status!=1";
+$cancel_result = $conn->query($cancel_sql);
+if ($cancel_result->num_rows > 0) {
+  $cancel_row = $cancel_result->fetch_assoc();
 }
 ?>
 <!DOCTYPE html>
@@ -89,7 +94,16 @@ else{
         <td>Total patients: <?php echo $row['total_pats']; ?></td>
       </tr>
       <tr>
-        <td>Total amount: <?php echo $row['total_amount']; ?></td>
+        <td>Patient amount: <?php echo round($row['total_amount']); ?></td>
+      </tr>
+      <tr>
+        <td>Cancelled Patients: <?php echo $cancel_row['total_pats']; ?></td>
+      </tr>
+      <tr>
+        <td>Cancelled amount: <?php echo round($cancel_row['total_amount']); ?></td>
+      </tr>
+      <tr>
+        <td style="font-family:Times New Roman;font-size:14pt;">Total amount: <?php echo $row['total_amount']+$cancel_row['total_amount']; ?></td>
       </tr>
       </table>
       <hr>

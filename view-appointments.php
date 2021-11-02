@@ -45,7 +45,7 @@ include("header.php");
                                     <tbody>
                                     <?php
                                     include("db.php");
-                                    $sql = "SELECT appointments.pat_id AS p_id, appointments.pat_token AS p_token, appointments.pat_name AS p_name, appointments.pat_phone AS p_phone, appointments.pat_apt_time AS p_time, doctors.doc_name AS p_doc  FROM appointments INNER JOIN doctors ON appointments.pat_doctor=doctors.doc_id ORDER BY appointments.pat_apt_time DESC";
+                                    $sql = "SELECT appointments.pat_id AS p_id, appointments.pat_token AS p_token, appointments.pat_name AS p_name, appointments.pat_phone AS p_phone, appointments.pat_apt_time AS p_time, doctors.doc_name AS p_doc  FROM appointments INNER JOIN doctors ON appointments.pat_doctor=doctors.doc_id WHERE appointments.pat_shift=".$_SESSION['shift_id']." ORDER BY appointments.pat_apt_time DESC";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         $count=1;

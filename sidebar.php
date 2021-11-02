@@ -10,6 +10,9 @@
             <br>
             Shift: <?php echo $_SESSION['shift_type'];?></p>
             <hr class="sidebar-divider my-0">
+            <?php
+            if($_SESSION["user_type"] != 'admin_user'):
+            ?>
             <li class="nav-item active">
                 <a class="nav-link" href="opd.php">
                 <i class="fas fa-calendar-plus"></i>
@@ -28,6 +31,9 @@
                     <span>Print Shift Reports</span>
                 </a>
             </li>
+            <?php
+            endif;
+            ?>
             <?php
             if($_SESSION["user_type"] == "admin_user"):?>
             <li class="nav-item active">
@@ -49,11 +55,19 @@
             endif;
             ?>
             <?php 
-            if(isset($_SESSION["shift_id"])):?>
+            if(isset($_SESSION["shift_id"]) && $_SESSION["shift_type"] !="Admin" ):?>
             <li class="nav-item active">
                 <a class="nav-link" href="close-shift.php">
                 <i class="fas fa-directions"></i>
                     <span>Close Shift</span></a>
+            </li>
+            <?php    
+            else:
+            ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="logout.php">
+                <i class="fas fa-directions"></i>
+                    <span>Logout</span></a>
             </li>
             <?php    
             endif;

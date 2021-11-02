@@ -9,7 +9,7 @@ $date_from = date("Y-m-d 00:00:00");
 $date_to = date("Y-m-d 23:59:59");
 
 $sql = "SELECT COUNT(pat_id) AS total_pats, SUM(pat_fee) AS total_amount FROM appointments 
-WHERE pat_created_on BETWEEN '$date_from' AND '$date_to'";
+WHERE pat_created_on BETWEEN '$date_from' AND '$date_to' AND pat_status = 1";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();

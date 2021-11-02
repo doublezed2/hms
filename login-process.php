@@ -13,13 +13,14 @@ if($result->num_rows > 0){
         $_SESSION['user_name'] = "admin";
         $_SESSION['shift_id'] = "0";
         $_SESSION['shift_user_name'] = "Admin";
-
+        $_SESSION['shift_type'] = "Admin";
+        header("Location:view-doctors.php");
     }
     else{
         $_SESSION['user_type'] = "non_admin";
         $_SESSION['user_name'] = $row['username'];        
+        header("Location:opd.php");
     }
-    header("Location:opd.php");
 }
 else{
     header("Location:index.php");

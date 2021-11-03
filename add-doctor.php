@@ -38,6 +38,14 @@ include("header.php");
                                     <label>Fee</label>
                                     <input type="text" name="d_fee" class="form-control" autocomplete="off" required>
                                 </div>
+                                <div class="form-group">
+                                    <label>Clinic</label>
+                                    <select class="form-control" name="clinic" required>
+                                        <option value="Ground Floor">Ground Floor</option>
+                                        <option value="First Floor">First Floor</option>
+                                        <option value="Basement">Basement</option>
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Save</button>
                             </form>
                             <?php

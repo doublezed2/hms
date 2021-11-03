@@ -46,6 +46,32 @@ include("header.php");
                                     <label>Fee</label>
                                     <input type="text" name="doc_fee" class="form-control" value="<?php echo $row['doc_fee'];  ?>" autocomplete="off" required>
                                 </div>
+                                <div class="form-group">
+                                    <label>Clinic</label>
+                                    <?php
+                                    if($row['clinic'] == "Ground Floor"){
+                                        $ground_floor = "Selected";    
+                                        $first_floor = "";
+                                        $basement = "";
+                                    }
+                                    elseif($row['clinic'] == "First Floor"){
+                                        $ground_floor = "";
+                                        $first_floor = "Selected";
+                                        $basement = "";    
+                                    }
+                                    elseif($row['clinic'] == "Basement"){
+                                        $ground_floor = "";
+                                        $first_floor = "";
+                                        $basement = "Selected";
+                                           
+                                    }
+                                    ?>
+                                    <select class="form-control" name="clinic" required>
+                                        <option value="Ground Floor" <?php echo $ground_floor; ?>>Ground Floor</option>
+                                        <option value="First Floor" <?php echo $first_floor; ?>>First Floor</option>
+                                        <option value="Basement" <?php echo $basement; ?>>Basement</option>
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Update</button>
                             </form>
                             <?php

@@ -17,3 +17,7 @@ rx_token_number{
 .new-old-pat{
   display: none;
 }
+.form-control{
+  color: #000 !important;
+  border: 1px solid #000 !important;
+}

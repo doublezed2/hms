@@ -17,7 +17,6 @@ WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' A
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $_SESSION["shift_report_printed"] = 1;
 }
 else{
   header("Location:print-shift-reports.php?failure=1");
@@ -29,7 +28,6 @@ WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' A
 $cancel_result = $conn->query($cancel_sql);
 if ($cancel_result->num_rows > 0) {
     $cancel_row = $cancel_result->fetch_assoc();
-    $_SESSION["shift_report_printed"] = 1;
     $cancelled_patients = $cancel_row['total_pats'];
     $cancelled_amount = $cancel_row['total_amount'];
 }

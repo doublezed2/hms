@@ -21,7 +21,7 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <div class="container-fluid p-2" style="background-color:#333;">
+            <div class="container-fluid p-1" style="background-color:#333;">
                 <div class="row">
                     <div class="col-md-12">
                     <ul class="nav"> <!-- class for justify-content-center -->
@@ -37,13 +37,13 @@ include("header.php");
             </div>
             
             <!-- Main Content -->
-            <div id="content" class="mt-4">
+            <div id="content" class="mt-2">
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
                         <h1 class="h3 mb-0 text-gray-800">OPD</h1>
                     </div>
 
@@ -97,7 +97,7 @@ include("header.php");
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4">
+                    <div class="row mt-1">
                         <div class="col-md-6">
                             <h3>Create Appointment</h3>
                             <form action="opd-process.php" method="POST">
@@ -130,7 +130,7 @@ include("header.php");
                                         ?> 
                                     </select>
                                 </div>
-                                <div id="new-old-pat" class="form-group new-old-pat">
+                                <div id="new-old-pat" style="margin-bottom:0px;" class="form-group new-old-pat">
                                     <div class="form-group form-check-inline">
                                         <input class="form-check-input" type="radio" name="new-old-pat" id="old-pat" value="old-pat" checked>
                                         <label class="form-check-label" for="old-pat">Old Patient</label>
@@ -140,7 +140,7 @@ include("header.php");
                                         <label class="form-check-label" for="new-pat">New Patient</label>
                                     </div>
                                 </div>
-                                <div class="form-group" style="margin-top:35px;">
+                                <div style="margin-bottom:0px;" class="form-group" >
                                     <div class="form-group form-check-inline">
                                         <input class="form-check-input" type="radio" name="p_date" id="radioToday"  value="<?php echo date("Y-m-d"); ?>" checked>
                                         <label class="form-check-label" for="radioToday">
@@ -154,7 +154,7 @@ include("header.php");
                                         </label>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div style="margin-bottom:0px;" class="form-group">
                                     <div class="form-group form-check-inline">
                                         <input class="form-check-input" type="radio" name="private-panel" id="private-pat"  value="private" checked>
                                         <label class="form-check-label" for="private-pat">Private</label>

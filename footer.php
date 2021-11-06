@@ -16,6 +16,7 @@
                 //Old new Patient
                 if(ArrDocFee[0]==1){
                     $("#new-old-pat").show();
+                    $("#old-pat").prop("checked", true);
                 }
                 else{
                     $("#new-old-pat").hide();

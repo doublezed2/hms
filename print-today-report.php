@@ -49,7 +49,7 @@ else{
         font-size: 16px;
     }
     @media print {
-      .receipt {
+      .report {
           display: block;
       }
       .print-message{
@@ -84,10 +84,10 @@ else{
       <p style="text-align:center; margin-top:0px;">Print Time:<br><?php echo date("h:i A d/m/Y");?></p>
     </div>
     <script>
-      window.print();
-      setTimeout(() => {
-        document.location.href = "print-shift-reports.php?success=1";
-      }, 1000);
+      // window.print();
+      // setTimeout(() => {
+      //   document.location.href = "print-shift-reports.php?success=1";
+      // }, 1000);
     </script>
   </body>
   </html>

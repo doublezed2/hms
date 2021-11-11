@@ -31,7 +31,7 @@ include("header.php");
                             <form action="print-current-shift-report.php" method="POST">
                                 <br>
                                 <br>
-                                <button type="submit" class="btn btn-primary btn-lg">Print Current Shift Report</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Print Shift Report</button>
                             </form>
                             <br>
                             <br>
@@ -56,6 +56,13 @@ include("header.php");
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Print Doctor Report</button>
+                            </form>
+                            <br>
+                            <br>
+                            <form action="print-xray-report.php" method="POST">
+                                <br>
+                                <br>
+                                <button type="submit" class="btn btn-primary btn-lg">Print X-Ray Report</button>
                             </form>
                             <br>
                             <br>

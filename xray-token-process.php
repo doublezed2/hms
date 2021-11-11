@@ -1,29 +1,33 @@
 <?php
 session_start();
+include("db.php");
 if(!isset($_SESSION["user_type"])){
   header("Location:index.php");
 }
 $p_name = trim($_POST["p_name"]);
 $p_phone = trim($_POST["p_phone"]);
-$p_doctor_arr = explode("|",$_POST["p_doctor"]);
-$p_doctor = $p_doctor_arr[0];
-$p_doctor_name = $p_doctor_arr[1];
-$p_doctor_clinic = $p_doctor_arr[3];
-$p_date = $_POST["p_date"];
-$p_fee = $_POST["p_fee"];
+
+$p_x_arr = explode("|",$_POST["p_xray"]);
+$p_xray_id = $p_x_arr[0];
+$p_xray_name = $p_x_arr[1];
+$x_fee = $_POST["x_fee"];
+
+$doc_arr = explode("|",$_POST["p_doctor"]);
+$doc_id = $doc_arr[0];
+$p_doc_name = $doc_arr[1];
+
 $pat_shift = $_SESSION["shift_id"];
+$p_date = date("Y-m-d h:i:s"); //2021-10-23
 
-include("db.php");
-$sql = "INSERT INTO appointments(pat_token, pat_name,pat_phone, pat_doctor, pat_apt_time, pat_fee, pat_created_on, pat_shift)
-SELECT IFNULL(MAX(pat_token) + 1, 1), '$p_name', '$p_phone', '$p_doctor', '$p_date', $p_fee, CURRENT_TIMESTAMP, $pat_shift
-FROM appointments WHERE pat_doctor=$p_doctor AND pat_apt_time = '$p_date'"; // Trying using currdate like xray token
-
+$sql = "INSERT INTO xray_apts(xapt_token, xapt_xname, xapt_pname, xapt_phone, xapt_doc, xapt_fee, xapt_created_on, xapt_shift)
+SELECT IFNULL(MAX(xapt_token) + 1, 1), '$p_xray_name', '$p_name', '$p_phone', '$doc_id', $x_fee, CURRENT_TIMESTAMP, $pat_shift
+FROM xray_apts WHERE date(xapt_created_on) = CURDATE()";
 if ($conn->query($sql) === TRUE) {
   $serial_no = $conn->insert_id;
-  $inner_sql = "SELECT pat_token FROM appointments WHERE pat_id=".$conn->insert_id;
+  $inner_sql = "SELECT xapt_token FROM xray_apts WHERE xapt_id=".$conn->insert_id;
   $inner_result = $conn->query($inner_sql);
   $inner_row = $inner_result->fetch_assoc();
-  $p_token = $inner_row['pat_token'];
+  $xapt_token = $inner_row['xapt_token'];
   ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -80,8 +84,8 @@ if ($conn->query($sql) === TRUE) {
     <p class="print-message">Printing Slip...</p>
     <div class="receipt">
       <div class="logo"><img src="img/logo-black.jpg" width="200px"></div>
-      <h3>OPD Slip</h3>
-      <span class="rx_token_number"><?php echo $p_token;?></span>
+      <h3>X-Ray Token</h3>
+      <span class="rx_token_number"><?php echo $xapt_token;?></span>
       <table style="width: 100%;">
       <tr>
         <td>Date: <?php echo date("d-m-Y", strtotime($p_date)) ; ?></td>
@@ -90,26 +94,23 @@ if ($conn->query($sql) === TRUE) {
         <td>Patient: <?php echo $p_name; ?></td>
       </tr>
       <tr>
-        <td style="font-size: 13pt;font-family: arial;"><?php echo $p_doctor_name; ?></td>
+        <td style="font-size: 13pt;font-family: arial;"><?php echo $p_xray_name; ?></td>
       </tr>
       <tr>
-        <td>Clinic: <?php echo $p_doctor_clinic;?></td>
+        <td>Dr: <?php echo $p_doc_name; ?></td>
       </tr>
       <tr>
-        <td>Company: <?php echo "Private"; ?></td>
+        <td>Fee paid: <?php echo $x_fee; ?></td>
       </tr>
-      <tr>
-        <td>Fee paid: <?php echo $p_fee; ?></td>
-      </tr>      
       </table>
       <hr>
-      <p style="font-size: 10pt;"><span style="float: left;">User: <?php echo $_SESSION['shift_user_name']; ?></span><span style="float: right;">Serial: AH-<?php echo $serial_no; ?></span></p>
+      <p style="font-size: 10pt;"><span style="float: left;">User: <?php echo $_SESSION['shift_user_name']; ?></span><span style="float: right;">Serial: xray-<?php echo $serial_no; ?></span></p>
       <p style="font-size: 10pt;"><span style="float: left;">Date/Time: <?php echo Date("h:i A d/m/Y"); ?></span></p>
     </div>
     <script>
       window.print();
       setTimeout(() => {
-       document.location.href = "opd.php?success=1";
+       document.location.href = "xray-token.php?success=1";
       }, 1000);
     </script>
   </body>
@@ -117,8 +118,7 @@ if ($conn->query($sql) === TRUE) {
   <?php
 } 
 else {
-  header("location:opd.php?failure=1");
+  header("location:xray-token.php?failure=1");
 }
 $conn->close();
-
 ?>

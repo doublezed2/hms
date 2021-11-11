@@ -6,8 +6,8 @@ header("Location:index.php");
 include("db.php");
 
 $s_shift_id = $_SESSION['shift_id'];
-
-$sh_sql = "UPDATE shifts SET end_time=NOW() WHERE shift_id=".$s_shift_id;
+$now_date = Date("Y-m-d h:i:s");
+$sh_sql = "UPDATE shifts SET end_time='$now_date' WHERE shift_id=".$s_shift_id;
 if ($conn->query($sh_sql) === TRUE) {
   $_SESSION["shift_report_printed"] = 1;
 }
@@ -85,7 +85,7 @@ if ($cancel_result->num_rows > 0) {
         <td>Name: <?php echo $_SESSION['shift_user_name']; ?></td>
       </tr>
       <tr>
-        <td> <?php $row['start_time']; ?>Start: <?php echo date("h:i A", strtotime($row['start_time'])) ; ?></td>
+        <td>Start: <?php echo date("h:i A", strtotime($row['start_time'])) ; ?></td>
       </tr>
       <tr>
         <td>End: <?php echo date("h:i A", strtotime($row['end_time'])) ; ?></td>
@@ -104,6 +104,9 @@ if ($cancel_result->num_rows > 0) {
       </tr>
       <tr>
         <td style="font-family:Times New Roman;font-size:14pt;">Total amount: <?php echo $row['total_amount']+$cancel_row['total_amount']; ?></td>
+      </tr>
+      <tr>
+        <td style="font-family:Times New Roman;font-size:14pt;">Total hospital: <?php echo ($row['total_pats']*50)+$cancel_row['total_amount']; ?></td>
       </tr>
       </table>
       <hr>

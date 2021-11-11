@@ -5,18 +5,26 @@ header("Location:index.php");
 }
 include("db.php");
 
-$date_from = date("Y-m-d 00:00:00");
-$date_to = date("Y-m-d 23:59:59");
-
-$sql = "SELECT COUNT(pat_id) AS total_pats, SUM(pat_fee) AS total_amount FROM appointments 
-WHERE pat_created_on BETWEEN '$date_from' AND '$date_to' AND pat_status = 1";
+$shift_id = $_SESSION["shift_id"];
+$sql = "SELECT COUNT(xapt_id) AS total_xapts, SUM(xapt_fee) AS total_amount FROM xray_apts 
+WHERE xapt_shift LIKE '$shift_id' AND xapt_status = 1";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+  $row = $result->fetch_assoc();
 }
 else{
-    header("Location:print-shift-reports.php?failure=1");
+  header("Location:print-shift-reports.php?failure=1");
 }
+// $cancelled_patients = 0;
+// $cancelled_amount = 0; // Not used yet
+// $cancel_sql = "SELECT COUNT(pat_id) AS total_pats, COUNT(pat_id)*50 AS total_amount FROM appointments 
+// WHERE `pat_doctor` LIKE '$doctor_id' AND `pat_created_on` BETWEEN '$date_from' AND '$date_to' AND pat_status != 1";
+// $cancel_result = $conn->query($cancel_sql);
+// if ($cancel_result->num_rows > 0) {
+//     $cancel_row = $cancel_result->fetch_assoc();
+//     $cancelled_patients = $cancel_row['total_pats'];
+//     $cancelled_amount = $cancel_row['total_amount'];
+// }
 ?>
 <!DOCTYPE html>
   <html lang="en">
@@ -62,22 +70,20 @@ else{
     <p class="print-message">Printing Report...</p>
     <div class="report">
       <div class="logo"><img src="img/logo-black.jpg" width="200px"></div>
-      <h3 style="margin-bottom:0px;">Day Report</h3>
+      <h3 style="margin-bottom:0px;">X-Ray Report</h3>
       <table style="width: 100%;">
       <tr>
         <td>Date: <?php echo date("d/m/Y");?></td>
       </tr>
       <tr>
-        <td>Total patients: <?php echo $row['total_pats']; ?></td>
+        <td>Shift: <?php echo $_SESSION['user_name'] ." - ". $_SESSION['shift_type'] ;?></td>
+      </tr>
+      
+      <tr>
+        <td>Total X-Rays: <?php echo $row['total_xapts']; ?></td>
       </tr>
       <tr>
-        <td>Total amount: <?php echo $row['total_amount']*1; ?></td>
-      </tr>
-      <tr>
-        <td>Hospital fees: <?php echo $row['total_pats']*50; ?></td>
-      </tr>
-      <tr>
-        <td>Doctor fees: <?php echo $row['total_amount']-($row['total_pats']*50); ?></td>
+        <td>Total amount: <?php echo $row['total_amount']; ?></td>
       </tr>
       </table>
       <hr>
@@ -92,6 +98,6 @@ else{
   </body>
   </html>
 
-  <?php
-    $conn->close();
-  ?>
+<?php
+$conn->close();
+?>

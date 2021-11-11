@@ -20,9 +20,9 @@
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="lab-xray.php">
-                <i class="fas fa-flask"></i>
-                    <span>Laboratory</span>
+                <a class="nav-link" href="xray-token.php">
+                <i class="fas fa-radiation"></i>
+                    <span>Radiology</span>
                 </a>
             </li>
             <li class="nav-item active">

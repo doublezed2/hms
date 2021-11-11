@@ -33,6 +33,12 @@
                     $("#p_fee").val(Math.trunc(oldFee-400));
                 }
             });
+
+            $('#p_xray').on('change', function() {
+                var xFee = ""+(this.value);
+                var ArrXFee = xFee.split("|");
+                $("#x_fee").val(Math.trunc(ArrXFee[2]));
+            });
         });
     </script>
 </body>

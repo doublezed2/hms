@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Asia/Karachi");
 if(!isset($_SESSION["user_type"])){
   header("Location:index.php");
 }
@@ -8,13 +9,13 @@ $shift_type = $_POST["shift_type"];
 $start_time = "";
 $end_time = "";
 $total_apts="";
-$total_amount="";
-
+$total_amount=""; //2021-10-23 14:35:44
+$now_date = Date("Y-m-d h:i:s");
 // Do Validation and Sanitization
 
 include("db.php");
 $sql = "INSERT INTO shifts(start_time,end_time,shift_user_name,shift_type)
-VALUES (NOW(), '', '$shift_user_name','$shift_type')";
+VALUES ('$now_date', '', '$shift_user_name','$shift_type')";
 if ($conn->query($sql) === TRUE) {
   $_SESSION['shift_id'] = $conn->insert_id;
   $_SESSION['shift_user_name'] = $shift_user_name;

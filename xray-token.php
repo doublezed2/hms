@@ -29,10 +29,7 @@ include("header.php");
                             <a class="nav-link text-white" href="xray-token.php">X-RAY</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">CT-SCAN</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">MRI</a>
+                            <a class="nav-link text-white" href="cancel-xapt.php">Cancel X-Ray</a>
                         </li>
                     </ul>
                     </div>

@@ -14,10 +14,7 @@ include("header.php");
                     <div class="col-md-12">
                     <ul class="nav"> <!-- class for justify-content-center -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="opd.php">OPD</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="cancel-apt.php">Cancel/Free</a>
+                            <a class="nav-link text-white" href="xray-token.php">X-Ray Token</a>
                         </li>
                     </ul>
                     </div>
@@ -25,25 +22,24 @@ include("header.php");
             </div>
 
             <div id="content" class="mt-4">
-
                 <div class="container-fluid">
                     <div class="row mt-4">
                         <div class="col-md-3 offset-md-1">
-                            <h3>Cancel Appointment</h3>
+                            <h3>Cancel X-Ray</h3>
                             <br>
-                            <form action="cancel-apt-process.php" method="POST">
+                            <form action="cancel-xapt-process.php" method="POST">
                                 <div class="form-group">
                                     <label>Serial Number</label>
-                                    <input type="text" name="apt-id" class="form-control" required>
+                                    <input type="text" name="xapt-id" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group form-check-inline">
-                                        <input class="form-check-input" type="radio" name="cancel-free" id="cancel-apt"  value="cancel" checked>
-                                        <label class="form-check-label" for="cancel-apt">Cancel</label>
+                                        <input class="form-check-input" type="radio" name="cancel-free" id="cancel-xapt"  value="cancel" checked>
+                                        <label class="form-check-label" for="cancel-xapt">Cancel</label>
                                     </div>
                                     <div class="form-group form-check-inline">
-                                        <input class="form-check-input" type="radio" name="cancel-free" id="free-apt" value="free">
-                                        <label class="form-check-label" for="free-apt">Free</label>
+                                        <input class="form-check-input" type="radio" name="cancel-free" id="free-xapt" value="free">
+                                        <label class="form-check-label" for="free-xapt">Free</label>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg">Save</button>
@@ -52,7 +48,7 @@ include("header.php");
                             if(isset($_GET['success'])):?>
                             <br>
                             <div class="alert alert-success">
-                            <strong>Appointment AH-<?php echo $_GET['id'] ?> Updated.</strong>
+                            <strong>X-Ray AH-<?php echo $_GET['id'] ?> Updated.</strong>
                             </div>
                             <?php 
                             endif;

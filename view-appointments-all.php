@@ -1,8 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION["user_type"])){
-header("Location:index.php");
+if($_SESSION["user_type"] != 'admin_user'){
+    header("Location:opd.php");
 }
+include("db.php");
 include("header.php");
 ?>
 <body id="page-top">
@@ -14,20 +15,6 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <div class="container-fluid p-1" style="background-color:#333;">
-                <div class="row">
-                    <div class="col-md-12">
-                    <ul class="nav"> <!-- class for justify-content-center -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="view-doctors.php">View Doctors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="add-doctor.php">Add Doctor</a>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
 
             <!-- Main Content -->
             <div id="content" class="mt-4">
@@ -42,46 +29,50 @@ include("header.php");
 
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <h3>View Doctors</h3>
+                            <h3>View Appointments</h3>
                             <div class="table-responsive">
-                                <?php
-                                if(isset($_GET['del'])):?>
-                                <br>
-                                <div class="alert alert-danger" style="width:400px;">
-                                <strong>Doctor deleted.</strong>
-                                </div>
-                                <?php 
-                                endif;
-                                ?>
                                 <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Fee</th>
-                                            <th>Clinic</th>
-                                            <th>Edit</th>
+                                            <th>Token</th>
+                                            <th>Phone</th>
+                                            <th>Doctor</th>
+                                            <th>Date</th>
+                                            <!-- <th>Action</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
-                                    include("db.php");
-                                    $sql = "SELECT * FROM doctors ORDER BY doc_name";
+                                    
+                                    $sql = "SELECT appointments.pat_id AS p_id, appointments.pat_token AS p_token, appointments.pat_name AS p_name, appointments.pat_phone AS p_phone, appointments.pat_apt_time AS p_time, doctors.doc_name AS p_doc FROM appointments INNER JOIN doctors ON appointments.pat_doctor=doctors.doc_id WHERE pat_status = 1  ORDER BY appointments.pat_id DESC";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         $count=1;
                                         while($row = $result->fetch_assoc()):
-                                        $doc_id = $row['doc_id'];
+                                        $pat_id = $row['p_id'];
                                         ?>
                                         <tr>
                                         <td scope="row"><?php echo $count; ?></td>
-                                        <td><?php echo $row['doc_name']; ?></td>
-                                        <td><?php echo $row['doc_fee']; ?></td>
-                                        <td><?php echo $row['clinic']; ?></td>
+                                        <td><?php echo $row['p_name'];?></td>
+                                        <td><?php echo $row['p_token']; ?></td>
+                                        <td><?php echo $row['p_phone']; ?></td>
+                                        <td><?php echo $row['p_doc']; ?></td>
                                         <td>
-                                            <a href="update-doctor.php?id=<?php echo $doc_id;?>" class="btn btn-warning">Edit</a>
-                                            <a href="del-doctor.php?id=<?php echo $doc_id;?>" class="btn btn-danger">Delete</a>
+                                        <?php
+                                            $date = $row['p_time'];
+                                            $dt = new DateTime($date);
+                                            echo $dt->format('d-m-Y'); 
+                                        ?>
                                         </td>
+                                        <?php
+                                        /*
+                                        <td>
+                                            <a href="update-appointment.php?id=<?php echo $pat_id;?>" class="btn btn-warning">Edit</a>
+                                            <a href="del-appointment.php?id=<?php echo $pat_id;?>" class="btn btn-danger">Cancel</a>
+                                        </td>
+                                        */?>
                                         </tr>
                                         <?php
                                         $count++;

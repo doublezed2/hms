@@ -1,6 +1,6 @@
 <?php
 session_start();
-date_default_timezone_set("Asia/Karachi");
+include("db.php");
 if(!isset($_SESSION["user_type"])){
   header("Location:index.php");
 }
@@ -13,7 +13,6 @@ $total_amount=""; //2021-10-23 14:35:44
 $now_date = Date("Y-m-d h:i:s");
 // Do Validation and Sanitization
 
-include("db.php");
 $sql = "INSERT INTO shifts(start_time,end_time,shift_user_name,shift_type)
 VALUES ('$now_date', '', '$shift_user_name','$shift_type')";
 if ($conn->query($sql) === TRUE) {

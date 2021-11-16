@@ -181,25 +181,28 @@ include("header.php");
                                     <thead>
                                         <tr>
                                             <th>Token#</th>
-                                            <th>Name</th>
+                                            <th>X-Ray</th>
+                                            <th>Patient</th>
                                             <th>Mobile</th>
                                             <th>Doctor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT xray_apts.xapt_token AS x_token, xray_apts.xapt_xname AS x_name , xray_apts.xapt_phone AS x_phone, doctors.doc_name AS x_doc FROM xray_apts INNER JOIN doctors ON xray_apts.xapt_doc=doctors.doc_id WHERE xray_apts.xapt_shift='$shift_id' AND xray_apts.xapt_status=1 ORDER BY xray_apts.xapt_created_on DESC limit 10";
+                                        $sql = "SELECT xray_apts.xapt_token AS x_token, xray_apts.xapt_xname AS x_name, xray_apts.xapt_pname AS x_pname, xray_apts.xapt_phone AS x_phone, doctors.doc_name AS x_doc FROM xray_apts INNER JOIN doctors ON xray_apts.xapt_doc=doctors.doc_id WHERE xray_apts.xapt_shift='$shift_id' AND xray_apts.xapt_status=1 ORDER BY xray_apts.xapt_created_on DESC limit 10";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()):
                                                 $xapt_token = $row['x_token'];
                                                 $xapt_name = $row['x_name'];
                                                 $xapt_phone = $row['x_phone'];
-                                                $xapt_doctor = $row['x_doc'];                                                
+                                                $xapt_doctor = $row['x_doc'];
+                                                $xapt_pat = $row['x_pname'];                                                
                                             ?>
                                             <tr>
                                                 <td><?php echo $xapt_token; ?></td>
                                                 <td><?php echo $xapt_name; ?></td>
+                                                <td><?php echo $xapt_pat; ?></td>
                                                 <td><?php echo $xapt_phone; ?></td>
                                                 <td><?php echo $xapt_doctor; ?></td>
                                             </tr>

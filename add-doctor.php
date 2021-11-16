@@ -14,7 +14,20 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
+            <div class="container-fluid p-1" style="background-color:#333;">
+                <div class="row">
+                    <div class="col-md-12">
+                    <ul class="nav"> <!-- class for justify-content-center -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="view-doctors.php">View Doctors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="add-doctor.php">Add Doctor</a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
             <!-- Main Content -->
             <div id="content" class="mt-4">
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("db.php");
 if($_SESSION["user_type"] != 'admin_user'){
     header("Location:opd.php");
 }
@@ -30,7 +31,6 @@ include("header.php");
                         <div class="col-md-3 offset-md-1">
                             <h3>Update Doctor</h3>
                             <?php
-                            include("db.php");
                             $sql = "SELECT * FROM doctors WHERE doc_id =".$_GET['id'];
                             $result = $conn->query($sql);
                             if ($result->num_rows > 0):

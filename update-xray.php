@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("db.php");
 if($_SESSION["user_type"] != 'admin_user'){
     header("Location:opd.php");
 }
@@ -14,20 +15,7 @@ include("header.php");
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            <div class="container-fluid p-1" style="background-color:#333;">
-                <div class="row">
-                    <div class="col-md-12">
-                    <ul class="nav"> <!-- class for justify-content-center -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="view-xrays.php">View X-Rays</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="add-xray.php">Add X-Rays</a>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-            </div>
+
             <!-- Main Content -->
             <div id="content" class="mt-4">
 
@@ -41,23 +29,31 @@ include("header.php");
 
                     <div class="row mt-4">
                         <div class="col-md-3 offset-md-1">
-                            <h3>Add X-Ray</h3>
-                            <form action="add-xray-process.php" method="POST">
+                            <h3>Update X-Ray</h3>
+                            <?php
+                            $sql = "SELECT * FROM xrays WHERE xray_id =".$_GET['id'];
+                            $result = $conn->query($sql);
+                            if ($result->num_rows > 0):
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <form action="update-xray-process.php" method="POST">
+                                <input type="hidden" name="xray_id" value="<?php echo $_GET['id'];?>">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" name="x_name" class="form-control" autocomplete="off" required autofocus>
+                                    <label>X-Ray</label>
+                                    <input type="text" name="xray_name" class="form-control" value="<?php echo $row['xray_name'];  ?>" autocomplete="off" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Fee</label>
-                                    <input type="text" name="x_fee" class="form-control" autocomplete="off" required>
+                                    <input type="text" name="xray_fee" class="form-control" value="<?php echo $row['xray_fee'];  ?>" autocomplete="off" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Update</button>
                             </form>
                             <?php
+                            endif; // $result->num_rows
                             if(isset($_GET['success'])):?>
                             <br>
                             <div class="alert alert-success">
-                            <strong>X-Ray added.</strong>
+                                <strong>X-Ray updated.</strong>
                             </div>
                             <?php 
                             endif;
@@ -73,12 +69,11 @@ include("header.php");
             <footer class="sticky-footer bg-white mt-5">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Ali Hospital 2021</span>
+                        <span>Copyright &copy; Ali Hospital <?php echo date("Y"); ?></span>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

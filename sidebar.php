@@ -39,17 +39,37 @@
             <li class="nav-item active">
                 <a class="nav-link" href="view-doctors.php">
                 <i class="fas fa-align-justify"></i>
-                    <span>View Doctors</span></a>
+                    <span>Doctors</span></a>
             </li>
             <?php    
             endif;
             ?>
-            <?php 
+            <?php
             if($_SESSION["user_type"] == "admin_user"):?>
             <li class="nav-item active">
-                <a class="nav-link" href="add-doctor.php">
+                <a class="nav-link" href="view-xrays.php">
                 <i class="fas fa-align-justify"></i>
-                    <span>Add Doctors</span></a>
+                    <span>X-Rays</span></a>
+            </li>
+            <?php    
+            endif;
+            ?>
+            <?php
+            if($_SESSION["user_type"] == "admin_user"):?>
+            <li class="nav-item active">
+                <a class="nav-link" href="view-appointments-all.php">
+                <i class="fas fa-align-justify"></i>
+                    <span>View Appointments</span></a>
+            </li>
+            <?php    
+            endif;
+            ?>
+            <?php
+            if($_SESSION["user_type"] == "admin_user"):?>
+            <li class="nav-item active">
+                <a class="nav-link" href="view-xapts-all.php">
+                <i class="fas fa-align-justify"></i>
+                    <span>View X-Rays</span></a>
             </li>
             <?php    
             endif;

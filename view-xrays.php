@@ -19,10 +19,10 @@ include("header.php");
                     <div class="col-md-12">
                     <ul class="nav"> <!-- class for justify-content-center -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="view-doctors.php">View Doctors</a>
+                            <a class="nav-link text-white" href="view-xrays.php">View X-Rays</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="add-doctor.php">Add Doctor</a>
+                            <a class="nav-link text-white" href="add-xray.php">Add X-Rays</a>
                         </li>
                     </ul>
                     </div>
@@ -42,13 +42,13 @@ include("header.php");
 
                     <div class="row mt-4">
                         <div class="col-md-12">
-                            <h3>View Doctors</h3>
+                            <h3>View X-Rays</h3>
                             <div class="table-responsive">
                                 <?php
                                 if(isset($_GET['del'])):?>
                                 <br>
                                 <div class="alert alert-danger" style="width:400px;">
-                                <strong>Doctor deleted.</strong>
+                                <strong>X-Ray deleted.</strong>
                                 </div>
                                 <?php 
                                 endif;
@@ -57,30 +57,28 @@ include("header.php");
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
+                                            <th>X-Ray Name</th>
                                             <th>Fee</th>
-                                            <th>Clinic</th>
                                             <th>Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php
                                     include("db.php");
-                                    $sql = "SELECT * FROM doctors ORDER BY doc_name";
+                                    $sql = "SELECT * FROM xrays ORDER BY xray_name";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         $count=1;
                                         while($row = $result->fetch_assoc()):
-                                        $doc_id = $row['doc_id'];
+                                        $xray_id = $row['xray_id'];
                                         ?>
                                         <tr>
                                         <td scope="row"><?php echo $count; ?></td>
-                                        <td><?php echo $row['doc_name']; ?></td>
-                                        <td><?php echo $row['doc_fee']; ?></td>
-                                        <td><?php echo $row['clinic']; ?></td>
+                                        <td><?php echo $row['xray_name']; ?></td>
+                                        <td><?php echo $row['xray_fee']; ?></td>
                                         <td>
-                                            <a href="update-doctor.php?id=<?php echo $doc_id;?>" class="btn btn-warning">Edit</a>
-                                            <a href="del-doctor.php?id=<?php echo $doc_id;?>" class="btn btn-danger">Delete</a>
+                                            <a href="update-xray.php?id=<?php echo $xray_id;?>" class="btn btn-warning">Edit</a>
+                                            <a href="del-xray.php?id=<?php echo $xray_id;?>" class="btn btn-danger">Delete</a>
                                         </td>
                                         </tr>
                                         <?php
@@ -103,7 +101,7 @@ include("header.php");
             <footer class="sticky-footer bg-white mt-5">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Ali Hospital 2021</span>
+                        <span>Copyright &copy; Ali Hospital <?php echo date('Y'); ?></span>
                     </div>
                 </div>
             </footer>

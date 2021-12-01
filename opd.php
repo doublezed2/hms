@@ -107,7 +107,7 @@ include("header.php");
                                 </div>
                                 <div class="form-group">
                                     <label>Mobile No.</label>
-                                    <input type="tel" name="p_phone" class="form-control" autocomplete="off" required tabindex="2" pattern="[0-9]{11}">
+                                    <input type="tel" name="p_phone" class="form-control" autocomplete="off" required tabindex="2">
                                 </div>
                                 <div class="form-group">
                                     <label>Choose Doctor</label>

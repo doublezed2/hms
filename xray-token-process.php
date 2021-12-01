@@ -17,10 +17,10 @@ $doc_id = $doc_arr[0];
 $p_doc_name = $doc_arr[1];
 
 $pat_shift = $_SESSION["shift_id"];
-$p_date = date("Y-m-d h:i:s"); //2021-10-23
+$p_date = date("Y-m-d H:i:s"); //2021-10-23
 
 $sql = "INSERT INTO xray_apts(xapt_token, xapt_xname, xapt_pname, xapt_phone, xapt_doc, xapt_fee, xapt_created_on, xapt_shift)
-SELECT IFNULL(MAX(xapt_token) + 1, 1), '$p_xray_name', '$p_name', '$p_phone', '$doc_id', $x_fee, CURRENT_TIMESTAMP, $pat_shift
+SELECT IFNULL(MAX(xapt_token) + 1, 1), '$p_xray_name', '$p_name', '$p_phone', '$doc_id', $x_fee, '$p_date', $pat_shift
 FROM xray_apts WHERE date(xapt_created_on) = CURDATE()";
 if ($conn->query($sql) === TRUE) {
   $serial_no = $conn->insert_id;

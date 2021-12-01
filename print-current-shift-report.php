@@ -6,7 +6,7 @@ header("Location:index.php");
 include("db.php");
 
 $s_shift_id = $_SESSION['shift_id'];
-$now_date = Date("Y-m-d h:i:s");
+$now_date = Date("Y-m-d H:i:s");
 $sh_sql = "UPDATE shifts SET end_time='$now_date' WHERE shift_id=".$s_shift_id;
 if ($conn->query($sh_sql) === TRUE) {
   $_SESSION["shift_report_printed"] = 1;

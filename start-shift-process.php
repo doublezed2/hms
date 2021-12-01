@@ -10,7 +10,7 @@ $start_time = "";
 $end_time = "";
 $total_apts="";
 $total_amount=""; //2021-10-23 14:35:44
-$now_date = Date("Y-m-d h:i:s");
+$now_date = Date("Y-m-d H:i:s");
 // Do Validation and Sanitization
 
 $sql = "INSERT INTO shifts(start_time,end_time,shift_user_name,shift_type)

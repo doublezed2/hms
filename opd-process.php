@@ -13,7 +13,7 @@ $p_doctor_clinic = $p_doctor_arr[3];
 $p_date = $_POST["p_date"];
 $p_fee = $_POST["p_fee"];
 $pat_shift = $_SESSION["shift_id"];
-$now_date = Date("Y-m-d h:i:s");
+$now_date = Date("Y-m-d H:i:s");
 $sql = "INSERT INTO appointments(pat_token, pat_name,pat_phone, pat_doctor, pat_apt_time, pat_fee, pat_created_on, pat_shift)
 SELECT IFNULL(MAX(pat_token) + 1, 1), '$p_name', '$p_phone', '$p_doctor', '$p_date', $p_fee, '$now_date', $pat_shift
 FROM appointments WHERE pat_doctor=$p_doctor AND pat_apt_time = '$p_date'"; // Trying using currdate like xray token

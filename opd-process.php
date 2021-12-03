@@ -103,7 +103,7 @@ if ($conn->query($sql) === TRUE) {
       </tr>      
       </table>
       <hr>
-      <p style="font-size: 10pt;"><span style="float: left;">User: <?php echo $_SESSION['shift_user_name']; ?></span><span style="float: right;">Serial: AH-<?php echo $serial_no; ?></span></p>
+      <p style="font-size: 10pt;"><span style="float: left;">Serial: AH-<?php echo $serial_no; ?></span></p>
       <p style="font-size: 10pt;"><span style="float: left;">Date/Time: <?php echo Date("h:i A d/m/Y"); ?></span></p>
     </div>
     <script>
